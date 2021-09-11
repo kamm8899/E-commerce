@@ -8,16 +8,17 @@ router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
 Product.findAll({
+  attributes:['id', 'product_name', 'price', 'stock', 'category_id'],
   include: [
     {
     model:Category,
+    attributes: ["id", "category_name"]
     },
 
     {
       model: Tag,
-      include: [
-        {model: ProductTag}
-      ]
+      through: ProductTag,
+      //productTag is not working its an empyt array
     }
   ]
 
@@ -34,6 +35,27 @@ Product.findAll({
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  Product.findOne({
+    where: {
+      id: req.params.id
+    },
+    include:[{
+
+      model: Category,
+      attributes: ["id", "category_name"],
+    },
+    {
+      model: Tag,
+      through: ProductTag,
+    }
+  ]
+
+
+  }).then(dbProductData => res.json(dbProductData))
+    .catch(err =>{
+      console.log(err);
+      res.status(500).json(err);
+    })
 });
 
 // create new product
