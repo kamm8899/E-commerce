@@ -18,7 +18,7 @@ Product.findAll({
     {
       model: Tag,
       through: ProductTag,
-      //productTag is not working its an empyt array
+      as: "Product tags",
     }
   ]
 
@@ -47,6 +47,7 @@ router.get('/:id', (req, res) => {
     {
       model: Tag,
       through: ProductTag,
+      as: "product tags",
     }
   ]
 
@@ -134,6 +135,22 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy({
+    where:{
+      id: req.params.id
+    }
+  })
+  .then(updatedProductTags =>{
+    if(!updatedProductTags){
+      res.status(404).json({ message: 'No Product found with this id'});
+      return;
+    }
+    res.json(updatedProductTags);
+  })
+  .catch(err =>{
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 module.exports = router;
