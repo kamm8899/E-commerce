@@ -52,11 +52,11 @@ router.get('/:id', (req, res) => {
   });
 });
 
-//double check this route
+//double check this route, problem at JSON positon 15
 router.post('/', (req, res) => {
   // create a new category
   Category.create({
-    category: req.body.category
+    category_name: req.body.category,
   })
   .then(dbCategoryData => res.json(dbCategoryData))
   .catch(err =>{
@@ -67,6 +67,27 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
+  Category.update(
+    {
+      category_name: req.body.category_name
+    },
+    {
+      where:{
+        id: req.params.id
+      }
+    }
+  )
+  .then(dbCategoryData =>{
+    if(!dbCategoryData){
+      res.status(404).json({ message: 'No category found with this id'});
+      return;
+    }
+    res.json(dbCategoryData);
+  })
+  .catch(err =>{
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 router.delete('/:id', (req, res) => {
