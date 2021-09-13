@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { regexp } = require('sequelize/types/lib/operators');
 const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
@@ -57,8 +56,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   // create a new category
   Category.create({
-    title: req.body.title.Category,
-    post_url: reg.body.post_url
+    category: req.body.category
   })
   .then(dbCategoryData => res.json(dbCategoryData))
   .catch(err =>{
