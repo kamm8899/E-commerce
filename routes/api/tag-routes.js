@@ -7,15 +7,24 @@ router.get('/', (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   Tag.findAll({
+    attributes:["id", "tag_name"],
     include:[
       {
         model: Product,
-        attributes:["id", "tag_name"]
-
+        attributes:["id", "product_name", "price", "stock", "category_id"],
+        through: ProductTag,
+        as: "ProductTag",
       }
     ]
   })
+  .then(dbTagData => res.json(dbTagData))
+  .catch(err =>{
+    console.log(err);
+    res.status(500).json(err);
+  });
+
 });
+
 
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
