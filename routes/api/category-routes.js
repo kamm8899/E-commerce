@@ -71,11 +71,6 @@ router.put('/:id', (req, res) => {
     {
       category_name: req.body.category_name
     },
-    {
-      where:{
-        id: req.params.id
-      }
-    }
   )
   .then(dbCategoryData =>{
     if(!dbCategoryData){
