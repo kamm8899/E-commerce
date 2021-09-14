@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
   // be sure to include its associated Products
   Category.findAll({
     attributes:["id", "category_name"],
+
     indclude:[{
       attributes:["id", "product_name", "price", "stock", "category_id"],
       model: Product,
@@ -33,6 +34,7 @@ router.get('/:id', (req, res) => {
     where:{
       id: req.params.id
     },
+    attributes:['id', 'category_name'],
     include:[{
       attributes: ["id", "product_name", "price", "stock", "category_id"],
       model: Product
@@ -56,12 +58,14 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   // create a new category
   Category.create({
+
     category_name: req.body.category_name,
   })
   .then(dbCategoryData => res.json(dbCategoryData))
   .catch(err =>{
     console.log(err);
     res.status(500).json(err);
+ 
   });
 });
 //works
@@ -71,6 +75,11 @@ router.put('/:id', (req, res) => {
     {
       category_name: req.body.category_name
     },
+    {
+      where:{
+        id: req.params.id
+      }
+    }
   )
   .then(dbCategoryData =>{
     if(!dbCategoryData){
