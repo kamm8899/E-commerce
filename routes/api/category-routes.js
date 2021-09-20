@@ -53,8 +53,6 @@ router.get('/:id', (req, res) => {
     res.status(500).json(err);
   });
 });
-//does not work
-//double check this route, problem at JSON positon 15
 router.post('/', (req, res) => {
   // create a new category
   Category.create({
@@ -68,7 +66,6 @@ router.post('/', (req, res) => {
  
   });
 });
-//works
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
   Category.update(
@@ -117,8 +114,3 @@ router.delete('/:id', (req, res) => {
 
 
 module.exports = router;
-
-
-//Check with TA 
-//does not work Post route
-//delete Route doesnt work

@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
-//works
 // get all products
 router.get('/', (req, res) => {
   // find all products
@@ -30,7 +29,6 @@ Product.findAll({
   });
 
 });
-//works
 // get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
@@ -58,7 +56,6 @@ router.get('/:id', (req, res) => {
       res.status(500).json(err);
     })
 });
-//works
 // create new product
 router.post('/', (req, res) => {
   /* req.body should look like this...
@@ -90,7 +87,6 @@ router.post('/', (req, res) => {
       res.status(400).json(err);
     });
 });
-//works somewhat
 // update product
 router.put('/:id', (req, res) => {
   // update product data
@@ -132,7 +128,6 @@ router.put('/:id', (req, res) => {
       res.status(400).json(err);
     });
 });
-//works
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
   Product.destroy({
@@ -154,7 +149,3 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
-
-
-//Check with TA
-//PUT Request tested, bad request, but when doing the GET request after, the updates are made
